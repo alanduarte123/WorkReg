@@ -185,9 +185,11 @@
 		.tablal {
 			display: grid;
 			width: 100%; 
+  
 		}
 		table {
-			width: clamp(); 
+			width: 100%; 
+
 			border-collapse: collapse;
 			margin-top: 20px;
 			table-layout: fixed;
@@ -195,15 +197,16 @@
 		th,
 		td {
 			border: 1px solid #818181;
-			padding: 10px;
-			text-align: left; 
+			padding:1px;
+			text-align: center; 
 			overflow: hidden; 
 		}		
 		th {
 			background-color: var(--primary-color);
 			color: #ffffff;
-			font-weight: 600;
-		}
+			font-weight: 500;
+            
+        }
          .acciones {
          flex-direction: column;
          }
@@ -337,15 +340,18 @@
     position: absolute;
 	transition: all 0.5s ease;
 	top:19.5%;
-    color: white;
+    color: #162b33;
     font-size: 18px;
     opacity: 0; /* Texto invisible inicialmente */
     transition: opacity 0.5s ease; /* Transición suave para la aparición del texto */
 }
 #text p {
+     color: #1c3b46;
 	 position: absolute;
 	 transition: all 0.5s ease;
-	top:71.5%;
+     padding: 2%;
+	 top:65%;
+     font-weight: bold;
 	
 	
 }

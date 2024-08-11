@@ -248,32 +248,29 @@
          guardarBtn.addEventListener('click', function() {
     const ano = anoSelect.value;
     const mes = mesSelect.value;
-    const claveMes = `registrosTrabajo_${ano}_${mes}`;
-    const claveTodoJunto = `registrosTrabajo_${ano}_todoJunto`;
-    const registrosGuardadosMes = localStorage.getItem(claveMes);
-    const registrosGuardadosTodoJunto = localStorage.getItem(claveTodoJunto);
+    const clave = `registrosTrabajo_${ano}_${mes}`;
+    const registrosGuardados = localStorage.getItem(clave);
 
-    // Guardar los registros en el mes correspondiente
-    if (registrosGuardadosMes) {
+    if (registrosGuardados) {
         if (confirm('Ya hay registros guardados para este período. ¿Deseas sobrescribirlos?')) {
-            localStorage.setItem(claveMes, JSON.stringify(registros));
+            // Guardar los registros si el usuario acepta
+            localStorage.setItem(clave, JSON.stringify(registros));
+            document.getElementById('alert').style.display = 'block';
+            alertTextElement.textContent = "Registros Guardados";
+            setTimeout(() => {
+                document.getElementById('alert').style.display = 'none';
+            }, 2000);
         }
     } else {
-        localStorage.setItem(claveMes, JSON.stringify(registros));
+        // Guardar los registros si no hay registros guardados para el período
+        localStorage.setItem(clave, JSON.stringify(registros));
+        document.getElementById('alert').style.display = 'block';
+        alertTextElement.textContent = "Registros Guardados";
+        setTimeout(() => {
+            document.getElementById('alert').style.display = 'none';
+        }, 2000);
     }
-
-    // Guardar los registros también en "todo junto"
-    let registrosTodoJunto = registrosGuardadosTodoJunto ? JSON.parse(registrosGuardadosTodoJunto) : [];
-    registrosTodoJunto = registrosTodoJunto.concat(registros); // Concatenar los nuevos registros
-    localStorage.setItem(claveTodoJunto, JSON.stringify(registrosTodoJunto));
-
-    document.getElementById('alert').style.display = 'block';
-    alertTextElement.textContent = "Registros Guardados";
-    setTimeout(() => {
-        document.getElementById('alert').style.display = 'none';
-    }, 2000);
 });
-
          
          cargarPeriodoBtn.addEventListener('click', function() {
              const ano = anoSelect.value;
