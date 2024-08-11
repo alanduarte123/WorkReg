@@ -16,24 +16,29 @@
          const TARIFA_FICTO_PROPINA = 196.60;
          
          // Inicializar selectores de año y mes
-         const anoActual = new Date().getFullYear();
-         for (let i = anoActual - 9; i <= anoActual + 9; i++) {
-             const option = document.createElement('option');
-             option.value = i;
-             option.textContent = i;
-             anoSelect.appendChild(option);
-         }
-         anoSelect.value = anoActual;
-         
-         const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-         meses.forEach((mes, index) => {
-             const option = document.createElement('option');
-             option.value = index + 1;
-             option.textContent = mes;
-             mesSelect.appendChild(option);
-         });
-         mesSelect.value = new Date().getMonth() + 1;
-         
+const anoActual = new Date().getFullYear();
+for (let i = anoActual - 9; i <= anoActual + 9; i++) {
+    const option = document.createElement('option');
+    option.value = i;
+    option.textContent = i;
+    anoSelect.appendChild(option);
+}
+anoSelect.value = anoActual;
+
+const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+meses.forEach((mes, index) => {
+    const option = document.createElement('option');
+    option.value = index + 1;
+    option.textContent = mes;
+    mesSelect.appendChild(option);
+});
+mesSelect.value = new Date().getMonth() + 1;
+
+// Agregar listener para cuando se cambie el mes
+mesSelect.addEventListener('change', () => {
+    cargarPeriodoBtn.click();
+});
+
          form.addEventListener('submit', function(e) {
              e.preventDefault();
              const fecha = document.getElementById('fecha').value;
@@ -63,6 +68,7 @@
              actualizarTabla();
              calcularResumen();
              form.reset();
+			 guardarBtn.click();
          });
 			function change(button) {
 				const colors = ['grey', '#f1f3f4'];
@@ -245,58 +251,77 @@
          `;
          
          }
-         guardarBtn.addEventListener('click', function() {
+			guardarBtn.addEventListener('click', function() {
+			const ano = anoSelect.value;
+			const mes = mesSelect.value;
+			const claveMes = `registrosTrabajo_${ano}_${mes}`;
+			const claveTodoJunto = `registrosTrabajo_${ano}_todoJunto`;
+			const registrosGuardadosMes = localStorage.getItem(claveMes);
+			const registrosGuardadosTodoJunto = localStorage.getItem(claveTodoJunto);
+
+			// Guardar los registros en el mes correspondiente
+			if (registrosGuardadosMes) {
+				if (confirm('Ya hay registros guardados para este período. ¿Deseas sobrescribirlos?')) {
+					localStorage.setItem(claveMes, JSON.stringify(registros));
+				}
+			} else {
+				localStorage.setItem(claveMes, JSON.stringify(registros));
+			}
+
+			// Guardar los registros también en "todo junto"
+			let registrosTodoJunto = registrosGuardadosTodoJunto ? JSON.parse(registrosGuardadosTodoJunto) : [];
+			registrosTodoJunto = registrosTodoJunto.concat(registros); // Concatenar los nuevos registros
+			localStorage.setItem(claveTodoJunto, JSON.stringify(registrosTodoJunto));
+
+			document.getElementById('alert').style.display = 'block';
+			alertTextElement.textContent = "Registros Guardados";
+			setTimeout(() => {
+				document.getElementById('alert').style.display = 'none';
+			}, 2000);
+		});
+
+         
+	cargarPeriodoBtn.addEventListener('click', function() {
     const ano = anoSelect.value;
     const mes = mesSelect.value;
     const clave = `registrosTrabajo_${ano}_${mes}`;
     const registrosGuardados = localStorage.getItem(clave);
 
     if (registrosGuardados) {
-        if (confirm('Ya hay registros guardados para este período. ¿Deseas sobrescribirlos?')) {
-            // Guardar los registros si el usuario acepta
-            localStorage.setItem(clave, JSON.stringify(registros));
-            document.getElementById('alert').style.display = 'block';
-            alertTextElement.textContent = "Registros Guardados";
-            setTimeout(() => {
-                document.getElementById('alert').style.display = 'none';
-            }, 2000);
-        }
-    } else {
-        // Guardar los registros si no hay registros guardados para el período
-        localStorage.setItem(clave, JSON.stringify(registros));
+        registros = JSON.parse(registrosGuardados);
+        actualizarTabla();
+        calcularResumen();
+
         document.getElementById('alert').style.display = 'block';
-        alertTextElement.textContent = "Registros Guardados";
+        alertTextElement.textContent = "Registros Cargados";
+        setTimeout(() => {
+            document.getElementById('alert').style.display = 'none';
+        }, 2000);
+    } else {
+        // Limpiar la tabla de registros
+        tabla.innerHTML = '';
+
+        // Crear y agregar un registro por defecto
+        const registroPorDefecto = {
+            fecha: new Date().toISOString().split('T')[0], // Fecha actual
+            horaEntrada: '00:00',
+            horaSalida: '00:00',
+            cantidadFictoPropina: 0,
+            horasNormales: 0,
+            horasNocturnas: 0
+        };
+
+        registros = [registroPorDefecto];
+        actualizarTabla();
+        calcularResumen();
+
+        document.getElementById('alert').style.display = 'block';
+        alertTextElement.textContent = "No hay Registros";
         setTimeout(() => {
             document.getElementById('alert').style.display = 'none';
         }, 2000);
     }
 });
-         
-         cargarPeriodoBtn.addEventListener('click', function() {
-             const ano = anoSelect.value;
-             const mes = mesSelect.value;
-             const clave = `registrosTrabajo_${ano}_${mes}`;
-             const registrosGuardados = localStorage.getItem(clave);
-             if (registrosGuardados) {
-                 registros = JSON.parse(registrosGuardados);
-                 actualizarTabla();
-                 calcularResumen();
-				
-				document.getElementById('alert').style.display = 'block';
-				alertTextElement.textContent = "Registros Cargados";
-				setTimeout(() => {
-				document.getElementById('alert').style.display = 'none';
-				}, 2000);
-    } else {
-				document.getElementById('alert').style.display = 'block';
-				alertTextElement.textContent = "No hay Registros";
-				setTimeout(() => {
-				document.getElementById('alert').style.display = 'none';
-				}, 2000);
-    }
-});
-
-         
          exportarBtn.addEventListener('click', function() {
              const ano = anoSelect.value;
              const mes = mesSelect.value;
