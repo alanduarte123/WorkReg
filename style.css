@@ -337,15 +337,18 @@
     position: absolute;
 	transition: all 0.5s ease;
 	top:19.5%;
-    color: white;
+    color: #162b33;
     font-size: 18px;
     opacity: 0; /* Texto invisible inicialmente */
     transition: opacity 0.5s ease; /* Transición suave para la aparición del texto */
 }
 #text p {
+     color: #1c3b46;
 	 position: absolute;
 	 transition: all 0.5s ease;
-	top:71.5%;
+     padding: 2%;
+	 top:65%;
+     font-weight: bold;
 	
 	
 }
