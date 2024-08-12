@@ -27,6 +27,9 @@
          font-weight: 600;
          }
          .container {
+		 left:5%;
+		 width:70%;
+		 position: absolute;
          display: flex;
          gap: 30px;
          flex-wrap: wrap;
