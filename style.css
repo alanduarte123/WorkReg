@@ -195,7 +195,7 @@
 		th,
 		td {
 			border: 1px solid #818181;
-			padding: 10px;
+			padding: 4px;
 			text-align: left; 
 			overflow: hidden; 
 		}		
@@ -360,3 +360,29 @@
 	width: 640px;
 	height:1px;
 }
+
+#welcome-message {
+    position: fixed;
+    top: 35%;
+    left: 40%;
+    transform: translateX(-50%);
+    background-color: #4CAF5000;
+    color: white;
+    border-radius: 100%;
+    z-index: 1000;
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+.zgift {
+		 border-width: 8px;
+		 border-style: solid;
+		 border-color:#082046;
+	     border-radius: 35%;
+		 display:block;
+         position: absolute;
+         height: 200px;
+         width: 200px;
+		 }

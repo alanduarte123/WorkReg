@@ -14,7 +14,32 @@
          const TARIFA_HORA_NORMAL = 216.24;
          const TARIFA_HORA_NOCTURNA = 259.49;
          const TARIFA_FICTO_PROPINA = 196.60;
-         
+
+		document.addEventListener("DOMContentLoaded", function() {
+			// Check if the message has been shown before
+			if (!localStorage.getItem('welcomeMessageShownsa')) {
+				const welcomeMessage = document.getElementById('welcome-message');
+
+				// Initially hide the message
+				welcomeMessage.style.display = 'none';
+
+				// Show the message after 1 second
+				setTimeout(function() {
+					welcomeMessage.style.display = 'block';
+
+					// Hide the message after 2 seconds
+					setTimeout(function() {
+						welcomeMessage.style.display = 'none';
+						// Set the flag in localStorage to remember that the message has been shown
+						localStorage.setItem('welcomeMessageShownsa', 'true');
+					}, 3000); // 2 seconds
+				}, 500); // 1 second
+			} else {
+				// If the message has been shown before, make sure it's hidden
+				document.getElementById('welcome-message').style.display = 'none';
+			}
+		});
+
          // Inicializar selectores de año y mes
 const anoActual = new Date().getFullYear();
 for (let i = anoActual - 9; i <= anoActual + 9; i++) {
