@@ -384,18 +384,16 @@ function ajustarConfiguracionSegunDispositivo() {
 		var tableHeaders = document.querySelectorAll('.tablal th'); // Selecciona todos los th dentro de .tablal
 		var sidebar = document.querySelector('.sidebar');
 		var sidebarH3 = document.querySelector('.sidebar h3'); // Selecciona el h3 dentro de sidebar
-		var upbar = document.querySelector('.upbar');
 					document.getElementById('titulos').style.fontSize="4vw";
                     document.querySelector('.alert').style.left="76%";
                     document.querySelector('.alert').style.bottom="70%";
                     document.querySelector('.alert').style.height= '50px'
                     document.querySelector('.alert').style.width= '130px';
 					sidebar.style.position= "fixed";
-					sidebar.style.left="76%";
+					sidebar.style.left="71%";
 					sidebar.style.height="160px";
 					sidebar.style.width=" 130px";
-					upbar.style.left="89%";
-					upbar.style.top="3.7%";
+					
 					// Modifica el h3 dentro de la sidebar
 					sidebarH3.style.position = "absolute";
 					sidebarH3.style.top = "-20px"; // Ajusta la posición vertical
@@ -407,7 +405,6 @@ function ajustarConfiguracionSegunDispositivo() {
     } else {
         // Configuración para computadoras
 		var sidebar = document.querySelector('.sidebar');
-		var upbar = document.querySelector('.upbar');
 		var sidebarH3 = document.querySelector('.sidebar h3'); // Selecciona el h3 dentro de sidebar
 		var tableHeaders = document.querySelectorAll('.tablal th'); // Selecciona todos los th dentro de .tablal		
 					document.getElementById('titulos').style.fontSize="2vw";
@@ -420,8 +417,7 @@ function ajustarConfiguracionSegunDispositivo() {
 					sidebar.style.height="180px";
 					sidebar.style.width=" 150px";
 					
-					upbar.style.left="92%";
-					upbar.style.top="9.2%";
+					
 					// Modifica el h3 dentro de la sidebar
 					sidebarH3.style.position = "absolute";
 					sidebarH3.style.top = "0px"; // Ajusta la posición vertical
