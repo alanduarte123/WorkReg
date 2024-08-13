@@ -413,7 +413,7 @@ function ajustarConfiguracionSegunDispositivo() {
                     document.querySelector('.alert').style.height= '50px'
                     document.querySelector('.alert').style.width= '130px';
 					sidebar.style.position= "fixed";
-					sidebar.style.left="84%";
+					sidebar.style.left="79%";
 					sidebar.style.height="180px";
 					sidebar.style.width=" 150px";
 					
